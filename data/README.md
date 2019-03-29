@@ -1,0 +1,20 @@
+# Subjects 
+We recruited 26 healthy subjects (8 females, mean age 24.39, age range 18-31) with no history of neurological or psychiatric illness. Ethical approval has been obtained from the local Research Ethics Committee (CPP Ile de France III) and informed consent has been obtained from all subjects. 
+
+# Data Acquisition 
+We acquired three runs of 10 minutes eyes-closed resting-state in one concurrent EEG-fMRI session (Tim-Trio 3T, Siemens). FMRI parameters comprised 40 slices, TR=2.0s, 3.0x3.0x3.0mm, TE = 50ms, field of view 192, FA=78°. EEG was acquired using an MR-compatible amplifier (BrainAmp MR, sampling rate 5kHz), 62 electrodes (Easycap), referenced to FCz, 1 ECG electrode, and 1 EOG electrode. Scanner clock was time-locked with the amplifier clock. Additionally, an anatomical T1-weighted MPRAGE sequence was acquired (176 slices, 1.0x1.0x1.0 mm, field of view 256, TR=7min).   
+
+# Data processing 
+
+## Atlas 
+T1-weighted images were used to delineate 68 cortical regions of the Desikan atlas and to extract a gray matter mask (recon-all, Freesurfer suite v6.0.0, http://surfer.nmr.mgh.harvard.edu/).  
+
+## fMRI 
+The BOLD timeseries were corrected for slice timing and spatially realigned using the SPM12 toolbox (revision 6906, http://www.fil.ion.ucl.ac.uk/spm/software/spm12). Mean white matter and cerebrospinal fluid timecourses were extracted from a manually defined spherical 5mm ROIs using MarsBaR (v0.44, http://marsbar.sourceforge.net/). Using the FSL toolbox (v5.0, https://fsl.fmrib.ox.ac.uk/fsl/) the scull-stripped T1 image (fsl-bet), Desikan atlas, and grey matter delineation were linearly coregistered into the subject space of the T2* images (fsl-flirt v6.0). The fMRI timeseries were averaged for each of the 68 atlas regions, and the six movement parameters (from realignment), CSF, white matter and grey matter global signal were regressed out of the region-wise timeseries. The resulting timeseries were bandpass-filtered at 0.009-0.08 Hz. 
+
+## EEG 
+EEG was corrected for the gradient artefact induced by the scanner using the template subtraction and adaptive noise cancelation followed by lowpass filtering at 75Hz, downsampling to 250Hz (65) and cardiobalistic artefact template subtraction using EEGlab v.7 (http://sccn.ucsd.edu/eeglab) and the FMRIB plug-in (https://fsl.fmrib.ox.ac.uk/eeglab/fmribplugin/). Data was then analyzed with Brainstorm software, which is documented and freely available under the GNU general public license (http://neuroimage.usc.edu/brainstorm, version 10th August 2017). Bandpass-filtering was carried out at 0.3-70 Hz. Data was segmented according to TR of the fMRI acquisition (2s epochs). Epochs containing head motion artifacts in EEG were visually identified after semi-automatically preselecting epochs where signal in any channel exceeded the mean channel timecourse by 4 std. These segments were excluded from the analysis. Electrode positions and T1 were coregistered by manually moving the electrode positions onto the electrode artifacts visible in the T1 image. Using the OpenMEEG BEM model, a forward model of the skull was calculated based on the individual T1 image of each subject. 
+The EEG signal was projected into source space using the Tikhonov-regularized minimum norm with the Tikhonov parameter set to 10% (brainstorm 2016 implementation, assumed SNR ratio 3.0, using current density maps, constrained sources normal to cortex, depth weighting 0.5/max amount 10). Source activity was averaged to the regions of the Desikan atlas. For each epoch (length 2s) imaginary coherence of the source activity was calculated between each region pair at 2Hz frequency resolution. The 2Hz bins were averaged for 5 canonical frequency bands: delta (0.5-4Hz), theta (4-8Hz), alpha (8-12Hz), beta (12-30Hz), gamma (30-60Hz). 
+
+## Joint motion scrubbing 
+For all analyses, both fMRI volumes and EEG epochs were excluded for time periods where motion was identified in either modality. Time periods with motion were defined as volumes exceeding the framewise displacement threshold FD=0.5 in fMRI, and by visual inspection in EEG as described above.
