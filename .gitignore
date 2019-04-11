@@ -2,6 +2,7 @@
 data/eeg/*
 data/fmri/*
 data/head_motion/*
+output/hmm/models/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
