@@ -120,8 +120,9 @@ def load_all_connectome_types(subject_id, trial_id,
     delta_eeg_connectomes  = load_eeg_connectome(subject_id, trial_id, frequency_band='delta', atlas=atlas)
     gamma_eeg_connectomes  = load_eeg_connectome(subject_id, trial_id, frequency_band='gamma', atlas=atlas)
     theta_eeg_connectomes  = load_eeg_connectome(subject_id, trial_id, frequency_band='theta', atlas=atlas)
-    
-    if fmri_connectomes is None or alpha_eeg_connectomes is None or beta_eeg_connectomes is None or delta_eeg_connectomes is None or gamma_eeg_connectomes is None or theta_eeg_connectomes is None:
+    broad_eeg_connectomes  = load_eeg_connectome(subject_id, trial_id, frequency_band='broad', atlas=atlas)
+
+    if fmri_connectomes is None or alpha_eeg_connectomes is None or beta_eeg_connectomes is None or delta_eeg_connectomes is None or gamma_eeg_connectomes is None or theta_eeg_connectomes is None or broad_eeg_connectomes is None:
         return None
     
     # Note that there are less fmri connectomes than EEG connectomes because some number of frames are used to 
@@ -134,7 +135,8 @@ def load_all_connectome_types(subject_id, trial_id,
     delta_eeg_connectomes = delta_eeg_connectomes[num_dropped_frames:]
     gamma_eeg_connectomes = gamma_eeg_connectomes[num_dropped_frames:]
     theta_eeg_connectomes = theta_eeg_connectomes[num_dropped_frames:]
-            
+    broad_eeg_connectomes = broad_eeg_connectomes[num_dropped_frames:]
+
     # Load artifact timepoint labels if necessary
     if filter_artifact_timepoints:
         
@@ -156,6 +158,7 @@ def load_all_connectome_types(subject_id, trial_id,
         delta_eeg_connectomes = np.delete(delta_eeg_connectomes, artifact_timepoints, axis=0)
         gamma_eeg_connectomes = np.delete(gamma_eeg_connectomes, artifact_timepoints, axis=0)
         theta_eeg_connectomes = np.delete(theta_eeg_connectomes, artifact_timepoints, axis=0)
+        broad_eeg_connectomes = np.delete(broad_eeg_connectomes, artifact_timepoints, axis=0)
     
     return {
         'fmri':fmri_connectomes,
@@ -164,6 +167,7 @@ def load_all_connectome_types(subject_id, trial_id,
         'delta':delta_eeg_connectomes,
         'gamma':gamma_eeg_connectomes,
         'theta':theta_eeg_connectomes,
+        'broad':broad_eeg_connectomes,
     }
 
 ALL_SUBJECT_IDS = set([pth.split('/')[-1] for pth in glob.glob('data/**/**/*')])
