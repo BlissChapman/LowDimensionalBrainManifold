@@ -7,7 +7,7 @@ class DesikanAtlas:
         plotting.plot_connectome(connectome,
                                  DesikanAtlas.coordinates(), 
                                  title=title,
-                                 edge_threshold='99%',
+                                 edge_threshold='90%',
                                  node_size=20,
                                  colorbar=True,
                                  axes=axes,
