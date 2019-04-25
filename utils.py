@@ -1,7 +1,7 @@
 import glob
 import numpy as np
 import os
-import scipy
+import scipy.io
 
 
 def load_fmri_timeseries(subject_id, trial_id, atlas='desikan'):
@@ -29,10 +29,10 @@ def compute_fmri_connectomes(subject_id, trial_id, seconds_used_to_compute_conne
     
     # Filter to only cortical fMRI data
     cortical_fmri_timeseries = fmri_timeseries[18:]
-    
+
     # Compute connectomes
-    # Note: 2 seconds of data are represented by each fMRI volume
-    num_timepoints_per_connectome = int(seconds_used_to_compute_connectome/2) 
+    num_seconds_per_connectome = 2
+    num_timepoints_per_connectome = int(seconds_used_to_compute_connectome/num_seconds_per_connectome) 
     fmri_connectome_matrices_through_time = []
 
     for t in range(num_timepoints_per_connectome, cortical_fmri_timeseries.shape[1]):
