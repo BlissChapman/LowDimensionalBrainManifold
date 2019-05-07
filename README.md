@@ -1,10 +1,9 @@
 # Low Dimensional Brain Manifolds
-Exploration of a simultaneous fMRI and EEG time series dataset through the lens of dimensionality reduction techniques.
-
 <img src="output/principal_component_analysis/multi_modal_low_dimensional_manifold_traversal.png" alt="drawing" width="800"/>
-------------
+
 
 ## Codebase Structure
+Exploration of a simultaneous fMRI and EEG time series dataset through the lens of dimensionality reduction techniques.
 
 #### Data Preprocessing & Validation
 - utils.py
